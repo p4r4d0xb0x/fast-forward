@@ -1,0 +1,199 @@
+# This prevents a Travis CI error when building for Windows.
+
+[profile.release-with-debug]
+inherits = "release"
+debug = true
+split-debuginfo = "packed"
+
+[profile.dev]
+opt-level = 0 # controls the `--opt-level` the compiler builds with.
+# 0-1 is good for debugging. 2 is well-optimized. Max is 3.
+debug = true # include debug information (debug symbols). Equivalent to
+# `-C debuginfo=2` compiler flag.
+rpath = false # controls whether compiler should set loader paths.
+# If true, passes `-C rpath` flag to the compiler.
+lto = false # Link Time Optimization usually reduces size of binaries
+# and static libraries. Increases compilation time.
+# If true, passes `-C lto` flag to the compiler, and if a
+# string is specified like 'thin' then `-C lto=thin` will
+# be passed
+debug-assertions = true # controls whether debug assertions are enabled
+# (e.g. debug_assert!() and arithmetic overflow checks)
+codegen-units = 1 # if > 1 enables parallel code generation which improves
+# compile times, but prevents some optimizations.
+# Passes `-C codegen-units`.
+panic = 'unwind'       # panic strategy (`-C panic=...`), can also be 'abort'
+incremental = true     # whether or not incremental compilation is enabled
+overflow-checks = true # use overflow checks for integer arithmetic.
+# Passes the `-C overflow-checks=...` flag to the compiler.
+
+prefer-dynamic = true # NOTE : Prefer dynamic linking
+
+
+# The release profile, used for `cargo build --release`.
+[profile.release]
+opt-level = 3
+debug = false
+rpath = false
+lto = true
+debug-assertions = false
+codegen-units = 1
+panic = 'unwind'
+incremental = false
+overflow-checks = false
+prefer-dynamic = true    # NOTE : Prefer dynamic linking
+
+# The testing profile, used for `cargo test`.
+[profile.test]
+opt-level = 0
+debug = 2
+rpath = false
+lto = false
+debug-assertions = true
+codegen-units = 1
+panic = 'unwind'
+incremental = true
+overflow-checks = true
+
+# The benchmarking profile, used for `cargo bench` and `cargo test --release`.
+[profile.bench]
+opt-level = 3
+debug = false
+rpath = false
+lto = false
+debug-assertions = false
+codegen-units = 1
+panic = 'unwind'
+incremental = false
+overflow-checks = false
+
+# The documentation profile, used for `cargo doc`.
+[profile.doc]
+opt-level = 0
+debug = 2
+rpath = false
+lto = false
+debug-assertions = true
+codegen-units = 1
+panic = 'unwind'
+incremental = true
+overflow-checks = true
+
+[workspace]
+resolver = "2"
+
+members = [
+  "core",
+  "library/shared",
+  "program/exec",
+]
+
+default-members = ["core"]
+
+exclude = []
+
+
+[workspace.package]
+name = "fast_forward-WORKSPACE"
+homepage = "https://ql.gl"
+license = "Apache-2.0"
+edition = "2021"
+version = "0.1.0"
+authors = ["KuuwangE <root.ql.gl>"]
+description = "A simple and fast framework for building high-performance, high-concurrency, and high-availability services."
+documentation = "Docs."
+repository = "REPO"
+
+
+[workspace.dependencies]
+
+fast_forward-core = { path = "core", name = "fast_forward-core" }
+fast_forward-shared = { path = "library/shared", name = "fast_forward-shared" }
+fast_forward-exec = { path = "program/exec", name = "fast_forward-exec" }
+
+# NOTE : LOGGING
+log = "*"
+colour = "*"
+log4rs = { version = "*" }
+
+# NOTE : BUILD DEPS
+build_cfg = { version = "*" }
+prefer-dynamic = { version = "*", features = ["link-test"] }
+rustc_version = "*"
+# cc = "*"
+# cargo_metadata = "*"
+# proc-macro2 = "*"
+# rustls = { version = "*", default-features = false, features = ["quic"] }
+
+# NOTE : TIME
+
+# chrono = { version = "*", default-features = false }
+# chrono-humanize = "*"
+# rustversion = "*"
+
+# NOTE : CLI
+
+# clap = "*"
+
+# NOTE : ASYNC
+
+# futures = "*"
+# futures-util = "*"
+# tokio = "*"
+# tokio-serde = "*"
+# tokio-stream = "*"
+# tokio-util = "*"
+
+# NOTE : OPTIMIZE
+
+# jemallocator = { package = "tikv-jemallocator", version = "0", features = [
+#   "unprefixed_malloc_on_supported_platforms",
+# ] }
+# lru = "*"
+# rayon = "*"
+# scopeguard = "*"
+# seqlock = "*"
+
+
+
+# NOTE : UTILS
+
+# hex = "*"
+# lazy_static = "*"
+# openssl = "*"
+# toml = "*"
+
+# NOTE : HASH / CRYPTO / COMPRESS
+
+# lz4 = "*"
+
+# NOTE : Faster Locking
+
+# parking_lot = "*"
+
+
+# NOTE : Mocking / Testing
+
+# mockall = "*"
+# proptest = "*"
+# static_assertions = "1.1.0"
+
+# NOTE : Os Related
+
+# nix = "*"
+# symlink = "*"
+# sys-info = "*"
+# sysctl = "*"
+# systemstat = "*"
+# tempfile = "*"
+
+
+# NOTE : JSON
+
+# serde = "*"
+# serde_bytes = "*"
+# serde_derive = "*"
+# serde_json = "*"
+# serde_with = { version = "*", default-features = false }
+# serde_yaml = "*"
+# serial_test = "*"

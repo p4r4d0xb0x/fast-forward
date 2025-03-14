@@ -1,0 +1,31 @@
+[package]
+name = "fast_forward-exec"
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
+description.workspace = true
+documentation.workspace = true
+repository.workspace = true
+
+[[bin]]
+name = "fast_forward-exec"
+path = "src/main.rs"
+
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[dependencies]
+prefer-dynamic.workspace = true
+log.workspace = true
+
+
+
+
+[dev-dependencies]
+prefer-dynamic.workspace = true
+
+
+[build-dependencies]
+prefer-dynamic.workspace = true
+build_cfg.workspace = true
+
+

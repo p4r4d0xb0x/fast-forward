@@ -1,0 +1,31 @@
+[package]
+name = "fast_forward-shared"
+description = "DESCRIPTION"
+documentation = "DOCUMENTATION"
+readme = "README"
+version = { workspace = true }
+authors = { workspace = true }
+repository = { workspace = true }
+homepage = { workspace = true }
+license = { workspace = true }
+edition = { workspace = true }
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[features]
+default = ["full"]
+full = []
+
+[dependencies]
+
+
+[dev-dependencies]
+
+[build-dependencies]
+#rustc_version = { workspace = true }
+
+#[package.metadata.docs.rs]
+#targets = ["x86_64-unknown-linux-gnu"]
+
+

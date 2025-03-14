@@ -1,0 +1,52 @@
+[package]
+name = "fast_forward-core"
+description = "DESCRIPTION"
+documentation = "DOCUMENTATION"
+readme = "README"
+version.workspace = true
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+license.workspace = true
+edition.workspace = true
+
+
+[[bin]]
+name = "fast_forward"
+path = "src/main.rs"
+
+[features]
+default = ["full"]
+full = []
+
+[dependencies]
+log.workspace = true
+colour.workspace = true
+log4rs = "*"
+fast_forward-shared.workspace = true
+prefer-dynamic.workspace = true
+rayon = "*"
+ndarray = "*"
+rand = "0.9"
+rand_distr = "0.5"
+
+
+# [ init code ]
+
+# [ macro ]
+
+#[macro_use] extern crate log;
+
+
+
+[dev-dependencies]
+prefer-dynamic.workspace = true
+
+[build-dependencies]
+build_cfg.workspace = true
+rustc_version.workspace = true
+prefer-dynamic.workspace = true
+
+#[package.metadata.docs.rs]
+#targets = ["x86_64-unknown-linux-gnu"]
+

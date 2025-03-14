@@ -1,0 +1,99 @@
+
+refresh_rate: 6 hours
+
+root:
+  level: debug
+  appenders:
+    - stdout
+    - rolling_file
+
+
+appenders:
+  stdout:
+    kind: console
+    encoder:
+      pattern: "[{l}:{M}]{h({d(%H:%M:%S)(local)} - {m}{n})}"
+
+  rolling_file:
+    kind: rolling_file
+    path: "log/rolling.log"
+
+    encoder:
+      pattern: "{d(%Y-%m-%d %H:%M:%S)(local)} - {h({l})}: {m}{n}"
+
+    policy:
+      trigger:
+        kind: size
+        limit: 50mb
+      roller:
+        kind: fixed_window
+        base: 1
+        count: 20
+        pattern: "log/rolling_{}.log"
+
+  special_log:
+    kind: "rolling_file"
+    path: "log/special.log"
+
+    encoder:
+      pattern: "{d(%Y-%m-%d %H:%M:%S)(local)} - {h({l})}: {m}{n}"
+    policy:
+      trigger:
+        kind: size
+        limit: 50mb
+      roller:
+
+        kind: "delete"
+
+loggers:
+  main:
+    level: trace
+
+  special:
+    level: trace
+    appenders:
+      - special_log
+    additive: false
+
+  hyper:
+    level: info
+  "h2":
+    level: info
+  tonic:
+    level: info
+  sled:
+    level: info
+
+    # appenders:
+    #   stdout:
+    #     kind: console
+    #   requests:
+    #     kind: file
+    #     path: "log/requests.log"
+    #     encoder:
+    #       pattern: "{d} - {m}{n}"
+
+    # root:
+    #   level: warn
+    #   appenders:
+    #     - stdout
+    # loggers:
+    #   app::backend::db:
+    #     level: info
+    #   app::requests:
+    #     level: info
+    #     appenders:
+    #       - requests
+    #     additive: false
+
+
+    # HACK : refreshing rate
+    # HACK : ROOT LEVEL LOGGER
+    # HACK: MAIN module에 대한 세팅
+
+    # HACK : 만약, 모듈별로 메세지의 레벨을 추가하려면 [module]: [level]: [로그레벨] 로 넣으면됨
+    # TODO : Hacky Solution / 현재 세팅은 빌드시에 들어가지 않으므로, 빌드시 기본 설정을 어떻게 넣을지도 고민해봐야함
+    # NOTE : SPECIAL LOGGER SETTING
+    # NOTE : SPECIAL LOG = TO DESCRIBE SPECICIAL THINGS
+    # NOTE :   info!(target: "special", "this is info for a special event"); // USING LIKE THIS
+
